@@ -62,7 +62,7 @@ public class Assignment1 {
 		
 		//ReLogin
 		driver.get("https://qa.rtcamp.net/activity/");
-		Thread.sleep(1000);
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		//Enter the valid user id
 		WebElement userIdValid = driver.findElement(By.id("bp-login-widget-user-login"));
 		userIdValid.clear();
@@ -89,7 +89,7 @@ public class Assignment1 {
 		for (WebElement eachOption : options1) {
 			System.out.println(eachOption.getText());
 		}
-		Thread.sleep(2000);
+		driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
 		privacy_dd1.selectByIndex(0);
 		
 		//Click the Post Update Button
@@ -97,7 +97,7 @@ public class Assignment1 {
 		postUpdateButton.click();
 		
 		//Hovering on User
-		Thread.sleep(1000);
+		driver.manage().timeouts().implicitlyWait(15,TimeUnit.SECONDS);
 		WebElement userProfile = driver.findElement(By.cssSelector("li#wp-admin-bar-my-account > a"));
 		Actions userAction1 = new Actions(driver);
 		userAction1.moveToElement(userProfile).build().perform();
@@ -120,39 +120,37 @@ public class Assignment1 {
 		for (WebElement eachOption : options2) {
 			System.out.println(eachOption.getText());
 		}
-		Thread.sleep(2000);
+		driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
 		privacy_dd2.selectByIndex(0);
 		
 		//Creating the Album
-		Thread.sleep(1000);
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		driver.findElement(By.xpath("//a[@id='rtmedia-nav-item-albums']")).click();
 		driver.findElement(By.xpath("//div[@class='clicker rtmedia-action-buttons']")).click();
 		driver.findElement(By.xpath("//a[@href='#rtmedia-create-album-modal']")).click();
 		driver.findElement(By.id("rtmedia_album_name")).sendKeys("TestAlbum");
 		driver.findElement(By.id("rtmedia_album_description")).sendKeys("Random Images Test");
 		driver.findElement(By.xpath("//button[text()='Create Album']")).click();
-		Thread.sleep(1000);
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		driver.findElement(By.xpath("//button[text()='×']")).click();
 		
 		//Select the Album
-		Thread.sleep(1000);
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 		driver.findElement(By.xpath("(//span[@id='rtm_show_upload_ui'])[1]")).click();
 		
 		//Select files button click
 		driver.manage().timeouts().implicitlyWait(15,TimeUnit.SECONDS);
 		WebElement selectFiles = driver.findElement(By.xpath("//*[@id=\"rtMedia-upload-button\"]"));
 		selectFiles.click();
-		Thread.sleep(3000);
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);;
 		
 		//First Image
-		driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
 		uploadFile("C:\\Users\\kevin\\Desktop\\rtCampTestData\\abc123.jpg");
 		driver.findElement(By.className("start-media-upload")).click();	
-		driver.manage().timeouts().implicitlyWait(50,TimeUnit.SECONDS);
+		Thread.sleep(5000);//Must
 		
-		Thread.sleep(2000);
 		driver.findElement(By.xpath("(//li[@class = 'rtmedia-list-item'])[1]")).click();
-		Thread.sleep(2000);//Must
+		Thread.sleep(4000);//Must
 		WebElement created_Album = driver.findElement(By.xpath("//div[@class='rtmedia-item-thumbnail']/img[1]"));
 		created_Album.click();
 		
@@ -176,6 +174,7 @@ public class Assignment1 {
 		WebElement cover_update_msg = driver.findElement(By.id("bp-cover-image-feedback"));
 		String Completion_Msg = cover_update_msg.getText();
 		Assert.assertEquals("Your new cover image was uploaded successfully.", Completion_Msg);
+		
 		//To Delete the Album
 		driver.get("https://qa.rtcamp.net/members/demo/media/album/");
 		driver.findElement(By.xpath("(//div[@class='rtmedia-item-thumbnail'])[1]")).click();
